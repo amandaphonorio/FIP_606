@@ -4,7 +4,7 @@ format: html
 editor: visual
 ---
 
-##Aula 1 - Inttrodução ao R
+##Aula 1 - Introdução ao R
 
 #Como criar vetores e atribuir valores 
 
