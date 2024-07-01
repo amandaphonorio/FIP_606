@@ -3,7 +3,7 @@
     "path": "C:/Users/Usuario/OneDrive/Área de Trabalho/FIP/FIP_606/_quarto.yml",
     "project_path": "_quarto.yml",
     "type": "yaml",
-    "hash": "84056346",
+    "hash": "265687375",
     "contents": "",
     "dirty": false,
     "created": 1719583860286.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "19,19",
-        "scrollLine": "5"
+        "cursorPosition": "31,0",
+        "scrollLine": "14"
     },
     "folds": "",
-    "lastKnownWriteTime": 1719840016,
+    "lastKnownWriteTime": 1719840731,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1719840016037,
+    "last_content_update": 1719840731679,
     "read_only": false,
     "read_only_alternatives": []
 }

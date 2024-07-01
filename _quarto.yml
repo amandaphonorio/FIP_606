@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "606"
+  title: "Disciplina FIP 606"
   navbar:
     left:
       - href: index.qmd
