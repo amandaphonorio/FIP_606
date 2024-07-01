@@ -6,7 +6,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-##Aprendendo carregar pacotes e importar os dados.
+# Aprendendo carregar pacotes e importar os dados
 
 Nessa aula, carregamos os pacotes `ec50estimator`, `readxl`, `tidyverse` e `ghseet` e usamos as funções `read_excel`, `read_csv` e `ghseet2tb` para importar os dados.
 
@@ -23,7 +23,7 @@ df3 <- read_csv("dados-diversos.csv")
 
 ```
 
-##Visualização de dados através do gglot2
+## Visualização de dados através do gglot2
 
 Nós importamos nossos dados e carregamos o pacote `ggplot2` e com as funções `geom_boxplot` e `geom_jitter`confeccionamos um gráfico. A função `ggsave` é utilizada para salvar o gráfico no seu computador.
 

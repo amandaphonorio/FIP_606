@@ -1,11 +1,12 @@
 ---
-title: "Aula3"
+title: "Aula 3"
 format: html
 warning: false
 message: false
 ---
 
-## Importando os dados da internet
+# Importando os dados da internet
+
 carregamos o pacote `tidyverse` para a importação dos dados.
 
 ```{r}
@@ -30,7 +31,8 @@ cr |>
        x= "Severity (%)", fill= "Region")
 
 ```
-#Visualização dos Dados
+
+### Visualização dos Dados
 
 Carregamos o pacote `ggthemes` e utilizamos a função `geom_histogram`
 
@@ -48,11 +50,11 @@ cr |>
        x= "Severity (%)", fill= "Region")
 
 ```
- 
-#Sumarizando os dados 
+
+## Sumarizando os dados
 
 Utlizamos a função `summary` e visualizamos por meio da função `geom_point`.
- 
+
 ```{r}
 summary(cr$inc)
 
@@ -66,12 +68,11 @@ cr |>
   ggplot(aes(inc, sev2))+
   geom_point()
 ```
- 
- 
-#criar subconjuntos
- 
+
+## Criar subconjuntos
+
 Utilizamos as funções `select()` e `filter()` do pacote **dplyr** para selecionar colunas e linhas, respectivamente.
- 
+
 ```{r}
 library(dplyr)
 
@@ -122,7 +123,7 @@ p2
 
 ```
 
-##Unindo os gráficos
+### Unindo os gráficos
 
 Carregamos o pacote `patchwork` e com a `função plot_layout` unimos os gráficos dos subconjuntos e com a função `plot_annotation` inserimos os elementos textuais.
 
@@ -144,4 +145,3 @@ p1 + inset_element(p3, left = 0.6, bottom = 0.6, right =1, top= 1)
 ggsave("patch1.png", width= 5,
        height = 4)
 ```
-

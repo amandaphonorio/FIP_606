@@ -143,6 +143,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link active" href="./Aula6.html" rel="" target="" aria-current="page">
  <span class="menu-text">Aula6</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Aula7.html" rel="" target="">
+ <span class="menu-text">Aula7</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Aula8.html" rel="" target="">
+ <span class="menu-text">Aula8</span></a>
+  </li>  
 </ul>
             <div class="quarto-navbar-tools ms-auto">
 </div>
@@ -159,8 +167,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#para-grupos-independentes" id="toc-para-grupos-independentes" class="nav-link active" data-scroll-target="#para-grupos-independentes">Para Grupos independentes</a></li>
-  <li><a href="#três-ou-mais-grupos-independentes" id="toc-três-ou-mais-grupos-independentes" class="nav-link" data-scroll-target="#três-ou-mais-grupos-independentes">Três ou mais grupos independentes</a></li>
+  <li><a href="#análise-inferencial" id="toc-análise-inferencial" class="nav-link active" data-scroll-target="#análise-inferencial">Análise Inferencial</a>
+  <ul class="collapse">
+  <li><a href="#visualização-dos-dados" id="toc-visualização-dos-dados" class="nav-link" data-scroll-target="#visualização-dos-dados">Visualização dos Dados</a></li>
+  </ul></li>
+  <li><a href="#para-grupos-independentes" id="toc-para-grupos-independentes" class="nav-link" data-scroll-target="#para-grupos-independentes">Para Grupos independentes</a></li>
+  <li><a href="#dois-grupos-dependentes" id="toc-dois-grupos-dependentes" class="nav-link" data-scroll-target="#dois-grupos-dependentes">Dois grupos dependentes</a></li>
+  <li><a href="#teste-não-paramétrico" id="toc-teste-não-paramétrico" class="nav-link" data-scroll-target="#teste-não-paramétrico">Teste não paramétrico</a></li>
+  <li><a href="#três-ou-mais-grupos-independentes" id="toc-três-ou-mais-grupos-independentes" class="nav-link" data-scroll-target="#três-ou-mais-grupos-independentes">Três ou mais grupos independentes</a>
+  <ul class="collapse">
+  <li><a href="#confeccionamos-um-gráfico-de-pontos-para-visualização-dos-dados" id="toc-confeccionamos-um-gráfico-de-pontos-para-visualização-dos-dados" class="nav-link" data-scroll-target="#confeccionamos-um-gráfico-de-pontos-para-visualização-dos-dados">Confeccionamos um gráfico de pontos para visualização dos dados</a></li>
+  <li><a href="#confeccionamos-um-gráfico-boxplot-para-visualização-dos-dados" id="toc-confeccionamos-um-gráfico-boxplot-para-visualização-dos-dados" class="nav-link" data-scroll-target="#confeccionamos-um-gráfico-boxplot-para-visualização-dos-dados">Confeccionamos um gráfico boxplot para visualização dos dados</a></li>
+  <li><a href="#seguimos-os-mesmos-procedimentos-realizados-anteriormente" id="toc-seguimos-os-mesmos-procedimentos-realizados-anteriormente" class="nav-link" data-scroll-target="#seguimos-os-mesmos-procedimentos-realizados-anteriormente">Seguimos os mesmos procedimentos realizados anteriormente</a></li>
+  </ul></li>
+  <li><a href="#alternativa-1---transformação" id="toc-alternativa-1---transformação" class="nav-link" data-scroll-target="#alternativa-1---transformação">Alternativa 1 - transformação</a></li>
   <li><a href="#alternativa-2---não-paramétrico" id="toc-alternativa-2---não-paramétrico" class="nav-link" data-scroll-target="#alternativa-2---não-paramétrico">Alternativa 2 - não paramétrico</a></li>
   <li><a href="#alternativa-3---glms" id="toc-alternativa-3---glms" class="nav-link" data-scroll-target="#alternativa-3---glms">Alternativa 3 - GLMs</a></li>
   </ul>
@@ -186,7 +206,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>##Análise Inferencial</p>
+<section id="análise-inferencial" class="level1">
+<h1>Análise Inferencial</h1>
 <p>Carregamos o pacote <code>gsheet</code> para a importação dos dados do Google Drive</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gsheet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -195,7 +216,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mg <span class="ot">&lt;-</span> <span class="fu">gsheet2tbl</span>(<span class="st">"https://docs.google.com/spreadsheets/d/1bq2N19DcZdtax2fQW9OHSGMR0X2__Z9T/edit#gid=983033137"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>#Visualização dos Dados</p>
+<section id="visualização-dos-dados" class="level2">
+<h2 class="anchored" data-anchor-id="visualização-dos-dados">Visualização dos Dados</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -217,6 +239,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="Aula6_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+</section>
+</section>
 <section id="para-grupos-independentes" class="level1">
 <h1>Para Grupos independentes</h1>
 <p>Transformamos os dados com a função <code>pivot_wider</code>, transformando os dados longos em formato largo.</p>
@@ -320,14 +344,19 @@ positive, statistically significant, and large (difference = 5.16, 95% CI
 [3.83, 6.49], t(17.35) = 8.15, p &lt; .001; Cohen's d = 3.65, 95% CI [2.14, 5.12])</code></pre>
 </div>
 </div>
-<p>#Dois grupos dependentes</p>
+</section>
+<section id="dois-grupos-dependentes" class="level1">
+<h1>Dois grupos dependentes</h1>
 <p>Carregamos o arquivo de uma planilha do Google Drive utilizando a função <code>gsheet2tbl</code> e plotamos um gráfico boxplot utilizando a função <code>geom_boxplot</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>escala <span class="ot">&lt;-</span> <span class="fu">gsheet2tbl</span>(<span class="st">"https://docs.google.com/spreadsheets/d/1bq2N19DcZdtax2fQW9OHSGMR0X2__Z9T/edit#gid=1729131173"</span>)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>escala <span class="sc">|&gt;</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(assessment,acuracia))<span class="sc">+</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gsheet)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>escala <span class="ot">&lt;-</span> <span class="fu">gsheet2tbl</span>(<span class="st">"https://docs.google.com/spreadsheets/d/1bq2N19DcZdtax2fQW9OHSGMR0X2__Z9T/edit#gid=1729131173"</span>)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>escala <span class="sc">|&gt;</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(assessment,acuracia))<span class="sc">+</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Aula6_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -435,7 +464,9 @@ mean difference
           0.235 </code></pre>
 </div>
 </div>
-<p>##Teste não paramétrico</p>
+</section>
+<section id="teste-não-paramétrico" class="level1">
+<h1>Teste não paramétrico</h1>
 <p>Utilizamos o teste Shapiro-Wilk para Verificar se as variáveis Unaided e Aided1 seguiam uma distribuição normal. O var.test verificou se as variâncias eram homogêneas. O teste de Wilcoxon pareado (também conhecido como teste de postos sinalizados de Wilcoxon) é uma alternativa não paramétrica ao teste t pareado. Ele é usado quando os dados não atendem aos pressupostos de normalidade necessários para o teste t pareado.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(escala2<span class="sc">$</span>Unaided)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -664,7 +695,8 @@ NOTE: If two or more means share the same grouping symbol,
 6     F 12</code></pre>
 </div>
 </div>
-<p>Confeccionamos um gráfico de pontos para visualização dos dados.</p>
+<section id="confeccionamos-um-gráfico-de-pontos-para-visualização-dos-dados" class="level3">
+<h3 class="anchored" data-anchor-id="confeccionamos-um-gráfico-de-pontos-para-visualização-dos-dados">Confeccionamos um gráfico de pontos para visualização dos dados</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>inseticida <span class="sc">|&gt;</span></span>
 <span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span> (<span class="fu">aes</span>(spray,count))<span class="sc">+</span></span>
@@ -673,7 +705,9 @@ NOTE: If two or more means share the same grouping symbol,
 <p><img src="Aula6_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Confeccionamos um gráfico boxplot para visualização dos dados.</p>
+</section>
+<section id="confeccionamos-um-gráfico-boxplot-para-visualização-dos-dados" class="level3">
+<h3 class="anchored" data-anchor-id="confeccionamos-um-gráfico-boxplot-para-visualização-dos-dados">Confeccionamos um gráfico boxplot para visualização dos dados</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>inseticida <span class="sc">|&gt;</span></span>
 <span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(spray,count))<span class="sc">+</span></span>
@@ -682,7 +716,9 @@ NOTE: If two or more means share the same grouping symbol,
 <p><img src="Aula6_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Seguimos os mesmos procedimentos realizados anteriormente.</p>
+</section>
+<section id="seguimos-os-mesmos-procedimentos-realizados-anteriormente" class="level3">
+<h3 class="anchored" data-anchor-id="seguimos-os-mesmos-procedimentos-realizados-anteriormente">Seguimos os mesmos procedimentos realizados anteriormente</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span> (count <span class="sc">~</span> spray, <span class="at">data =</span> inseticida)</span>
 <span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -813,7 +849,10 @@ Bartlett's K-squared = 25.96, df = 5, p-value = 9.085e-05</code></pre>
 <p><img src="Aula6_files/figure-html/unnamed-chunk-15-4.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>#Alternativa 1 - transformação</p>
+</section>
+</section>
+<section id="alternativa-1---transformação" class="level1">
+<h1>Alternativa 1 - transformação</h1>
 <p>Como os dados não foram normais e as variâncias não foram homogêneas realizamos a transformação dos dados utilizando a função <code>mutate</code>, count2 é a raiz quadrada dos valores na coluna count. Esta transformação é frequentemente usada para estabilizar a variância ou aproximar a normalidade dos dados. Confeccionamos um gráfico boxplot mostrando a distribuição da raiz quadrada das contagens de insetos (count2) para cada tipo de spray (spray). Cada boxplot representa a variação de count2 dentro de cada grupo de spray.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a>inseticida <span class="ot">&lt;-</span>inseticida <span class="sc">|&gt;</span></span>

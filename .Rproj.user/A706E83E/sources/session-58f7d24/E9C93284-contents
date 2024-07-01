@@ -4,9 +4,9 @@ format: html
 editor: visual
 ---
 
-#Aula 1 - Introdução ao R
+# Aula 1 - Introdução ao R
 
-Como criar vetores e atribuir valores
+Como criar vetores e atribuir valores.
 
 ```{r}
 A <- 1
@@ -15,13 +15,13 @@ C <- 3
 D <- 4
 ```
 
-##Como criar um dataframe
+## Como criar um dataframe
 
 ```{r}
 df <- data.frame(A,B,C,D)
 ```
 
-#Como realizar operações no R
+### Como realizar operações no R
 
 ```{r}
 1+1

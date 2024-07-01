@@ -143,6 +143,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link" href="./Aula6.html" rel="" target="">
  <span class="menu-text">Aula6</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Aula7.html" rel="" target="">
+ <span class="menu-text">Aula7</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Aula8.html" rel="" target="">
+ <span class="menu-text">Aula8</span></a>
+  </li>  
 </ul>
             <div class="quarto-navbar-tools ms-auto">
 </div>
@@ -159,8 +167,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#calcular-média-mediana-e-desvio-padrão-das-notas-das-sabatinas-1-e-2" id="toc-calcular-média-mediana-e-desvio-padrão-das-notas-das-sabatinas-1-e-2" class="nav-link active" data-scroll-target="#calcular-média-mediana-e-desvio-padrão-das-notas-das-sabatinas-1-e-2">Calcular média, mediana e desvio padrão das notas das sabatinas 1 e 2</a></li>
-  <li><a href="#visualizar-e-explorar-os-dados-por-meio-de-gráfico-boxplot" id="toc-visualizar-e-explorar-os-dados-por-meio-de-gráfico-boxplot" class="nav-link" data-scroll-target="#visualizar-e-explorar-os-dados-por-meio-de-gráfico-boxplot">Visualizar e explorar os dados por meio de gráfico boxplot</a></li>
+  <li><a href="#importar-dados-da-planilha-do-google-drive" id="toc-importar-dados-da-planilha-do-google-drive" class="nav-link active" data-scroll-target="#importar-dados-da-planilha-do-google-drive">Importar dados da planilha do Google Drive</a>
+  <ul class="collapse">
+  <li><a href="#calcular-média-mediana-e-desvio-padrão-das-notas-das-sabatinas-1-e-2" id="toc-calcular-média-mediana-e-desvio-padrão-das-notas-das-sabatinas-1-e-2" class="nav-link" data-scroll-target="#calcular-média-mediana-e-desvio-padrão-das-notas-das-sabatinas-1-e-2">Calcular média, mediana e desvio padrão das notas das sabatinas 1 e 2</a></li>
+  <li><a href="#visualizar-e-explorar-os-dados-por-meio-de-gráfico-boxplot" id="toc-visualizar-e-explorar-os-dados-por-meio-de-gráfico-boxplot" class="nav-link" data-scroll-target="#visualizar-e-explorar-os-dados-por-meio-de-gráfico-boxplot">Visualizar e explorar os dados por meio de gráfico boxplot</a>
+  <ul class="collapse">
+  <li><a href="#visualizar-os-subconjuntos" id="toc-visualizar-os-subconjuntos" class="nav-link" data-scroll-target="#visualizar-os-subconjuntos">Visualizar os subconjuntos</a></li>
+  </ul></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -184,7 +198,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>#Importar dados da planilha do Google Drive</p>
+<section id="importar-dados-da-planilha-do-google-drive" class="level1">
+<h1>Importar dados da planilha do Google Drive</h1>
 <p>Carregar pacote <code>gsheet</code>, utilizar a função <code>gsheet2tbl</code> para importar a tabela do Google Drive.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gsheet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -193,8 +208,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>sabatina <span class="ot">&lt;-</span> <span class="fu">gsheet2tbl</span>(<span class="st">"https://docs.google.com/spreadsheets/d/1bq2N19DcZdtax2fQW9OHSGMR0X2__Z9T/edit#gid=1092065531"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="calcular-média-mediana-e-desvio-padrão-das-notas-das-sabatinas-1-e-2" class="level1">
-<h1>Calcular média, mediana e desvio padrão das notas das sabatinas 1 e 2</h1>
+<section id="calcular-média-mediana-e-desvio-padrão-das-notas-das-sabatinas-1-e-2" class="level2">
+<h2 class="anchored" data-anchor-id="calcular-média-mediana-e-desvio-padrão-das-notas-das-sabatinas-1-e-2">Calcular média, mediana e desvio padrão das notas das sabatinas 1 e 2</h2>
 <p>Criar e filtrar sabatina 1 e sabatina 2 Carregar o pacote <code>tidyverse</code>, para selecionar e filtrar, foram usados as funções <code>select</code> e <code>filter</code> e para calcular a mediana, média e desvio padrão, foram usados as seguintes funções <code>median</code>, <code>mean</code> e <code>sd</code>, respectivamente.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -261,8 +276,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="do">##A mediana, média e desvio padrão da nota da sabatina 2 foi de 84.4, 79,3 e 19,7, respectivamente.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="visualizar-e-explorar-os-dados-por-meio-de-gráfico-boxplot" class="level1">
-<h1>Visualizar e explorar os dados por meio de gráfico boxplot</h1>
+<section id="visualizar-e-explorar-os-dados-por-meio-de-gráfico-boxplot" class="level2">
+<h2 class="anchored" data-anchor-id="visualizar-e-explorar-os-dados-por-meio-de-gráfico-boxplot">Visualizar e explorar os dados por meio de gráfico boxplot</h2>
 <p>Carregar pacote <code>ggplot2</code>e utilizar a função <code>geom_boxplot</code> para confeccionar o gráfico.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span> (ggplot2)</span>
@@ -282,7 +297,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="Aula5_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>#Visualizar os subconjuntos Gráficos ggplot para cada subconjunto, foi carregado os pacotes <code>ggthemes</code> e <code>patchwork</code>. Com a função <code>geom_vline</code>, foi adicionado uma linha vertical na posição media1 e media2 de cor vermelha e estilo tracejado para cada gráfico. Os gráficos foram unidos com a função <code>p1+p2</code> do pacote <code>patchwork</code>.</p>
+<section id="visualizar-os-subconjuntos" class="level3">
+<h3 class="anchored" data-anchor-id="visualizar-os-subconjuntos">Visualizar os subconjuntos</h3>
+<p>Gráficos ggplot para cada subconjunto, foi carregado os pacotes <code>ggthemes</code> e <code>patchwork</code>. Com a função <code>geom_vline</code>, foi adicionado uma linha vertical na posição media1 e media2 de cor vermelha e estilo tracejado para cada gráfico. Os gráficos foram unidos com a função <code>p1+p2</code> do pacote <code>patchwork</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -328,6 +345,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>A média dos alunos na sabatina 1 foi de 7,955 e na sabatina 2 de 7,926</p>
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->

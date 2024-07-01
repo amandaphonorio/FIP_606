@@ -1,0 +1,47 @@
+# Importação de dados
+
+Utilizamos o pacote `gsheet`, para importar uma planilha no Google Drive através da função `gsheet2tbl`.Após a importação, o dataframe severidade é exibido para verificar se os dados foram carregados corretamente.A coluna rep do dataframe severidade é convertida para fator usando o operador \|\> e a função `mutate` do pacote `dplyr`.
+
+```{r}
+library(gsheet)
+library(dplyr)
+
+severidade <- gsheet2tbl("https://docs.google.com/spreadsheets/d/1bq2N19DcZdtax2fQW9OHSGMR0X2__Z9T/edit#gid=1807247585")
+severidade
+
+severidade <- severidade |>
+  mutate(rep = as.factor(rep))
+```
+
+Criamos um gráfico visualização com vários painéis, cada um mostrando a severidade média dos dados (mean_sev) plotada ao longo dos dias (day), segmentada por tipo de irrigação (Irrigation).
+
+```{r}
+library(ggplot2)
+
+severidade |> 
+  group_by(day, Irrigation) |> 
+  summarise(mean_sev = mean(severity)) |> 
+  ggplot(aes(day, mean_sev)) +
+   geom_point(which = 0.05)+ 
+  geom_line()+
+  facet_wrap(~~Irrigation)+
+  labs(x = "Days",
+  y = "Mean of Severity")
+```
+
+# Cálculo da Área abaixo da curva de progresso da doença
+
+Carregamos o pacote `epifitter` e `agricolae`. Os dados foram agrupados por Irrigation (tipo de irrigação) e rep (repetição). Para cada grupo, a função AUDPC foi utilizada para calcular o AACPD, utilizando as colunas day e severity. O resultado é armazenado em uma nova coluna chamada aacpd no data frame curve2. Um modelo linear m_curve foi ajustado para prever o aacpd (severidade da doença) com base em Irrigation (tipo de irrigação) e rep (repetição) como variáveis independentes. O modelo foi ajustado utilizando o data frame curve2.A função anova foi aplicada ao modelo m_curve para realizar a ANOVA. A ANOVA testou se as variáveis independentes (Irrigation e rep) têm um efeito estatisticamente significativo na variável dependente (aacpd). A função cv.model do pacote agricolae foi aplicada ao modelo m_curve para calcular o CV. O CV mede a variabilidade do aacpd em relação à sua média.
+
+```{r}
+library(epifitter)
+curve2 <- severidade|> 
+group_by(Irrigation, rep) |> 
+  summarise(aacpd = AUDPC(day,severity))
+
+m_curve <- lm(aacpd ~ Irrigation + factor(rep), data = curve2)
+anova(m_curve)
+
+library(agricolae)
+cv.model(m_curve)
+```

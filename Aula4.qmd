@@ -159,7 +159,7 @@ cr |>
 
 ## Geom_errorbar
 
-Importamos dados do  Google Drive, calculamos a média e o desvio padrão da variável (comp) agrupada por trat, e criamos um gráfico com pontos e barras de erro utilizando `ggplot2`.
+Importamos dados do Google Drive, calculamos a média e o desvio padrão da variável (comp) agrupada por trat, e criamos um gráfico com pontos e barras de erro utilizando `ggplot2`.
 
 ```{r}
 library(gsheet)
@@ -182,7 +182,9 @@ mg |>
            label = "*"
            )
 ```
+
 Criamos um gráfico de dispersão com jitter usando `ggplot2` para visualizar a variável comp em relação a trat no dataframe mg. A função geom_jitter é utilizada para adicionar um desvio aleatório aos pontos no eixo x, facilitando a visualização dos dados quando há sobreposição de pontos.
+
 ```{r}
 
 mg |>

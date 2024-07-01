@@ -20,6 +20,10 @@ website:
         text: Aula5
       - href: Aula6.qmd
         text: Aula6
+      - href: Aula7.qmd
+        text: Aula7
+      - href: Aula8.qmd
+        text: Aula8
 
 format:
   html:

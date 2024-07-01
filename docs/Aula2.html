@@ -143,6 +143,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link" href="./Aula6.html" rel="" target="">
  <span class="menu-text">Aula6</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Aula7.html" rel="" target="">
+ <span class="menu-text">Aula7</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Aula8.html" rel="" target="">
+ <span class="menu-text">Aula8</span></a>
+  </li>  
 </ul>
             <div class="quarto-navbar-tools ms-auto">
 </div>
@@ -155,7 +163,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#aprendendo-carregar-pacotes-e-importar-os-dados" id="toc-aprendendo-carregar-pacotes-e-importar-os-dados" class="nav-link active" data-scroll-target="#aprendendo-carregar-pacotes-e-importar-os-dados">Aprendendo carregar pacotes e importar os dados</a>
+  <ul class="collapse">
+  <li><a href="#visualização-de-dados-através-do-gglot2" id="toc-visualização-de-dados-através-do-gglot2" class="nav-link" data-scroll-target="#visualização-de-dados-através-do-gglot2">Visualização de dados através do gglot2</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -177,7 +194,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>##Aprendendo carregar pacotes e importar os dados.</p>
+<section id="aprendendo-carregar-pacotes-e-importar-os-dados" class="level1">
+<h1>Aprendendo carregar pacotes e importar os dados</h1>
 <p>Nessa aula, carregamos os pacotes <code>ec50estimator</code>, <code>readxl</code>, <code>tidyverse</code> e <code>ghseet</code> e usamos as funções <code>read_excel</code>, <code>read_csv</code> e <code>ghseet2tb</code> para importar os dados.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ec50estimator)</span>
@@ -212,7 +230,8 @@ dbl (3): rep, day, severity
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
 </div>
-<p>##Visualização de dados através do gglot2</p>
+<section id="visualização-de-dados-através-do-gglot2" class="level2">
+<h2 class="anchored" data-anchor-id="visualização-de-dados-através-do-gglot2">Visualização de dados através do gglot2</h2>
 <p>Nós importamos nossos dados e carregamos o pacote <code>ggplot2</code> e com as funções <code>geom_boxplot</code> e <code>geom_jitter</code>confeccionamos um gráfico. A função <code>ggsave</code> é utilizada para salvar o gráfico no seu computador.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gsheet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -247,6 +266,8 @@ dbl (3): rep, day, severity
 </div>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
