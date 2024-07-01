@@ -8,32 +8,16 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
       - href: Aula1.qmd
         text: Aula1
-      - href: index.qmd
-        text: Home
-      - about.qmd
       - href: Aula2.qmd
         text: Aula2
-      - href: index.qmd
-        text: Home
-      - about.qmd
       - href: Aula3.qmd
         text: Aula3
-      - href: index.qmd
-        text: Home
-      - about.qmd
       - href: Aula4.qmd
         text: Aula4
-      - href: index.qmd
-        text: Home
-      - about.qmd
       - href: Aula5.qmd
         text: Aula5
-      - href: index.qmd
-        text: Home
-      - about.qmd
       - href: Aula6.qmd
         text: Aula6
 
