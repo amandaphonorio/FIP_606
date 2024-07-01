@@ -1,0 +1,104 @@
+---
+title: "Aula 5"
+format: html
+editor: visual
+---
+
+#Importar dados da planilha do Google Drive 
+
+Carregar pacote `gsheet`, utilizar a função `gsheet2tbl` para importar a tabela do Google Drive.
+
+```{r}
+library(gsheet)
+
+sabatina <- gsheet2tbl("https://docs.google.com/spreadsheets/d/1bq2N19DcZdtax2fQW9OHSGMR0X2__Z9T/edit#gid=1092065531")
+```
+
+# Calcular média, mediana e desvio padrão das notas das sabatinas 1 e 2
+
+Criar e filtrar sabatina 1 e sabatina 2 
+Carregar o pacote `tidyverse`, para selecionar e filtrar, foram usados as funções `select` e `filter` e para calcular a mediana, média e desvio padrão, foram usados as seguintes funções `median`, `mean` e `sd`, respectivamente.
+
+```{r}
+library(tidyverse)
+
+sabatina_1 <- sabatina |>
+  select(prova, nota) |>
+  filter(prova =="1")
+sabatina_1
+
+
+sabatina_2 <- sabatina |>
+  select (prova, nota) |>
+  filter (prova =="2")
+sabatina_2
+
+mediana1 <- median(sabatina_1$nota)
+mediana2 <- median(sabatina_2$nota)
+media1 <- mean(sabatina_1$nota)
+media2 <- mean (sabatina_2$nota)
+sd1 <- sd(sabatina_1$nota)
+sd2<- sd(sabatina_2$nota)
+
+# A mediana, média e desvio padrão da nota da sabatina 1 foi de 85.7, 79,5 e 19,0, respectivamente.
+##A mediana, média e desvio padrão da nota da sabatina 2 foi de 84.4, 79,3 e 19,7, respectivamente.
+```
+
+# Visualizar e explorar os dados por meio de gráfico boxplot
+
+Carregar pacote `ggplot2`e utilizar a função `geom_boxplot` para confeccionar o gráfico.
+
+```{r}
+library (ggplot2)
+
+  sabatina |>
+  
+  ggplot(aes(prova,nota))+
+  geom_boxplot(color='black', fill='lightpink')+
+  ylim(0,100)+
+  labs(title= "Frequência das notas")+
+  facet_wrap(~prova,scales = "free_x")
+```
+
+#Visualizar os subconjuntos 
+Gráficos ggplot para cada subconjunto, foi carregado os  pacotes `ggthemes` e `patchwork`.
+Com a função `geom_vline`, foi adicionado uma linha vertical na posição media1 e media2 de cor vermelha e estilo tracejado para cada gráfico. Os gráficos foram unidos com a função `p1+p2` do pacote `patchwork`.
+
+
+```{r}
+library(ggthemes)
+library(patchwork)
+
+p1 <- sabatina_1 |>
+  ggplot (aes(x=nota))+
+  geom_histogram(bins= 5, fill = "violet", color = "gray")+
+  facet_wrap(~prova)+
+  theme_few()+
+  labs( y= "Frequência",
+       x= "Nota")+
+    geom_vline(xintercept = media1, color ="red", linetype ="dashed")
+  
+p1
+
+  p2 <- sabatina_2 |>
+  ggplot (aes(x=nota))+
+  geom_histogram(bins= 5, fill = "violet", color = "gray")+
+  facet_wrap(~prova)+
+  theme_few()+
+  labs( y= "Frequência",
+       x= "Nota")+
+    geom_vline(xintercept = media2, color ="red", linetype ="dashed")
+  
+p2
+  
+(p1+p2) + plot_layout(guides = "collect",
+          axes= "collect")+
+          plot_annotation(title= "Frequência das Notas Sabatinas 1 e 2 da disciplina FIP              606",
+          caption= "Source: Emerson Del Ponte (2024)")
+
+    
+ggsave("patch_sabatinas.png", width= 5, height = 4) 
+#salvando os gráficos
+  
+```
+A média dos alunos na sabatina 1 foi de 7,955 e na sabatina 2 de 7,926
