@@ -2,8 +2,4 @@
 title: "About"
 ---
 
-About this site
-
-```{r}
-1 + 1
-```
+Essa página contém os scripts das aulas que foram ministradas pelo professor Emerson Del Ponte na disciplina Análise e Visualização de Dados em Fitopatologia do programa de pós-graduação em Fitopatologia da Universidade Federal de Viçosa.

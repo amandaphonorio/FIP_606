@@ -1,11 +1,5 @@
 ---
-title: "606"
+title: "Sobre a página"
 ---
 
-This is a Quarto website.
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
-
-```{r}
-1 + 1
-```
+Essa página contém os scripts das aulas que foram ministradas pelo professor Emerson Del Ponte na disciplina Análise e Visualização de Dados em Fitopatologia do programa de pós-graduação em Fitopatologia da Universidade Federal de Viçosa.

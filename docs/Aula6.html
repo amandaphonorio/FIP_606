@@ -132,7 +132,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Aula3</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./Aula4.qmd" rel="" target="">
+    <a class="nav-link" href="./Aula4.html" rel="" target="">
  <span class="menu-text">Aula4</span></a>
   </li>  
   <li class="nav-item">
@@ -186,7 +186,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>#Análise Inferencial</p>
+<p>##Análise Inferencial</p>
 <p>Carregamos o pacote <code>gsheet</code> para a importação dos dados do Google Drive</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gsheet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -435,7 +435,7 @@ mean difference
           0.235 </code></pre>
 </div>
 </div>
-<p>#Teste não paramétrico</p>
+<p>##Teste não paramétrico</p>
 <p>Utilizamos o teste Shapiro-Wilk para Verificar se as variáveis Unaided e Aided1 seguiam uma distribuição normal. O var.test verificou se as variâncias eram homogêneas. O teste de Wilcoxon pareado (também conhecido como teste de postos sinalizados de Wilcoxon) é uma alternativa não paramétrica ao teste t pareado. Ele é usado quando os dados não atendem aos pressupostos de normalidade necessários para o teste t pareado.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(escala2<span class="sc">$</span>Unaided)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1182,7 +1182,7 @@ NOTE: If two or more means share the same grouping symbol,
       But we also did not show them to be the same. </code></pre>
 </div>
 </div>
-<p>#Anova fatorial</p>
+<p>##Anova fatorial</p>
 <p>Importamos a planilha do Google Drive utilizando a função <code>gsheet2tbl</code> e criamos um gráfico de pontos para visualização dos dados.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb163"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb163-1"><a href="#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gsheet)</span>
@@ -1197,7 +1197,7 @@ NOTE: If two or more means share the same grouping symbol,
 <p><img src="Aula6_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>#Modelo fatorial (two-way anova)</p>
+<p>##Modelo fatorial (two-way anova)</p>
 <p>Ajustamos um modelo linear com a variável resposta severity e os preditores treat e dose, incluindo a interação entre eles, e realizamos a ANOVA. Plotamos resíduos simulados para verificar a adequação do modelo.: Calcula as EMMs para dose, condicionadas por treat, utilizando o comando <code>emmeans(mf, ~ dose | treat)</code> e visualizamos as letras para para as EMMs, facilitando interpretação das comparações.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb164"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb164-1"><a href="#cb164-1" aria-hidden="true" tabindex="-1"></a>mf <span class="ot">&lt;-</span> <span class="fu">lm</span> (severity <span class="sc">~</span> treat<span class="sc">*</span><span class="fu">factor</span>(dose), </span>

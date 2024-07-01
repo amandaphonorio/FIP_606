@@ -4,9 +4,9 @@ format: html
 editor: visual
 ---
 
-#Análise Inferencial
+##Análise Inferencial
 
-Carregamos o pacote  `gsheet` para a importação dos dados do Google Drive
+Carregamos o pacote `gsheet` para a importação dos dados do Google Drive
 
 ```{r}
 library(gsheet)
@@ -24,6 +24,7 @@ mg |>
 ```
 
 # Para Grupos independentes
+
 Transformamos os dados com a função `pivot_wider`, transformando os dados longos em formato largo.
 
 ```{r}
@@ -68,7 +69,6 @@ library(report)
 report(teste1)
 ```
 
-
 #Dois grupos dependentes
 
 Carregamos o arquivo de uma planilha do Google Drive utilizando a função `gsheet2tbl` e plotamos um gráfico boxplot utilizando a função `geom_boxplot`.
@@ -112,9 +112,10 @@ t.test(escala2$Aided1, escala2$Unaided,
                  var.equal = FALSE )
 ```
 
-#Teste não paramétrico
+##Teste não paramétrico
 
 Utilizamos o teste Shapiro-Wilk para Verificar se as variáveis Unaided e Aided1 seguiam uma distribuição normal. O var.test verificou se as variâncias eram homogêneas. O teste de Wilcoxon pareado (também conhecido como teste de postos sinalizados de Wilcoxon) é uma alternativa não paramétrica ao teste t pareado. Ele é usado quando os dados não atendem aos pressupostos de normalidade necessários para o teste t pareado.
+
 ```{r}
 
 shapiro.test(escala2$Unaided)
@@ -128,7 +129,8 @@ wilcox.test(escala2$Aided1,
 
 # Três ou mais grupos independentes
 
-Utilizamos a função `gsheet2tbl` para carregar os dados da planilha do Google Drive. Confeccionamos um gráfico de dispersão para ajudar a visualizar a relação entre as variáveis especie e tcm, com cada ponto representando uma observação no dataset. A função geom_jitter ajuda a evitar a sobreposição de pontos, facilitando a visualização das distribuições dos dados. 
+Utilizamos a função `gsheet2tbl` para carregar os dados da planilha do Google Drive. Confeccionamos um gráfico de dispersão para ajudar a visualizar a relação entre as variáveis especie e tcm, com cada ponto representando uma observação no dataset. A função geom_jitter ajuda a evitar a sobreposição de pontos, facilitando a visualização das distribuições dos dados.
+
 ```{r}
 micelial <- gsheet2tbl("https://docs.google.com/spreadsheets/d/1bq2N19DcZdtax2fQW9OHSGMR0X2__Z9T/edit#gid=959387827")
 
@@ -137,8 +139,8 @@ micelial <- gsheet2tbl("https://docs.google.com/spreadsheets/d/1bq2N19DcZdtax2fQ
   geom_jitter(width = 0.05)
 
 ```
-Realizamos uma análise de variância (ANOVA) no modelo ajustado m1 para testar a significância do preditor especie. Depois criamos um histograma dos resíduos do modelo para visualizar a distribuição dos erros. Realizamos o teste de Shapiro-Wilk para verificar a normalidade dos resíduos do modelo. Realizamos o teste de Bartlett para verificar a homogeneidade das variâncias entre os grupos definidos por especie. Usamos a função `emmeans` do pacote `emmeans` para calcular as médias estimadas dos níveis de especie. Utilizamos o pacote `multcomp` e a função `cld `(compact letter display) para realizar comparações múltiplas das médias e adicionar letras compactas para indicar grupos significativamente diferentes.O pacote  `DHARMa ` foi utilizado para simular resíduos do modelo m1 e criar um gráfico de diagnóstico dos resíduos simulados. O pacote `performance` foi usado para verificar a normalidade dos resíduos `check_normality`, a heteroscedasticidade `check_heteroscedasticity` e realizar uma verificação abrangente do modelo `check_model`.
 
+Realizamos uma análise de variância (ANOVA) no modelo ajustado m1 para testar a significância do preditor especie. Depois criamos um histograma dos resíduos do modelo para visualizar a distribuição dos erros. Realizamos o teste de Shapiro-Wilk para verificar a normalidade dos resíduos do modelo. Realizamos o teste de Bartlett para verificar a homogeneidade das variâncias entre os grupos definidos por especie. Usamos a função `emmeans` do pacote `emmeans` para calcular as médias estimadas dos níveis de especie. Utilizamos o pacote `multcomp` e a função `cld`(compact letter display) para realizar comparações múltiplas das médias e adicionar letras compactas para indicar grupos significativamente diferentes.O pacote `DHARMa` foi utilizado para simular resíduos do modelo m1 e criar um gráfico de diagnóstico dos resíduos simulados. O pacote `performance` foi usado para verificar a normalidade dos resíduos `check_normality`, a heteroscedasticidade `check_heteroscedasticity` e realizar uma verificação abrangente do modelo `check_model`.
 
 ```{r}
 
@@ -164,7 +166,8 @@ check_normality(m1)
 check_heteroscedasticity(m1)
 check_model(m1)
 ```
-Carregamos o pacote `tidyverse`. Foi carregado  o dataset InsectSprays e o armazena na variável inseticida. Contamos o número de ocorrências de cada tipo de spray no dataset, fornecendo uma visão rápida da distribuição dos diferentes sprays.
+
+Carregamos o pacote `tidyverse`. Foi carregado o dataset InsectSprays e o armazena na variável inseticida. Contamos o número de ocorrências de cada tipo de spray no dataset, fornecendo uma visão rápida da distribuição dos diferentes sprays.
 
 ```{r}
 library(tidyverse)
@@ -186,6 +189,7 @@ inseticida |>
 
 
 ```
+
 Confeccionamos um gráfico boxplot para visualização dos dados.
 
 ```{r}
@@ -227,7 +231,7 @@ plot(simulateResiduals(m1))
 
 #Alternativa 1 - transformação
 
-Como os dados não foram normais e as variâncias não foram homogêneas realizamos a transformação dos dados utilizando a função  `mutate`, count2 é a raiz quadrada dos valores na coluna count. Esta transformação é frequentemente usada para estabilizar a variância ou aproximar a normalidade dos dados. Confeccionamos um gráfico boxplot mostrando a distribuição da raiz quadrada das contagens de insetos (count2) para cada tipo de spray (spray). Cada boxplot representa a variação de count2 dentro de cada grupo de spray.
+Como os dados não foram normais e as variâncias não foram homogêneas realizamos a transformação dos dados utilizando a função `mutate`, count2 é a raiz quadrada dos valores na coluna count. Esta transformação é frequentemente usada para estabilizar a variância ou aproximar a normalidade dos dados. Confeccionamos um gráfico boxplot mostrando a distribuição da raiz quadrada das contagens de insetos (count2) para cada tipo de spray (spray). Cada boxplot representa a variação de count2 dentro de cada grupo de spray.
 
 ```{r}
 inseticida <-inseticida |>
@@ -239,7 +243,8 @@ inseticida |>
 
 ```
 
-Realizamos  uma análise de variância (ANOVA) no modelo ajustado. Usamos `emmeans` para calcular as médias estimadas dos níveis de spray.Plotamos  essas médias estimadas.Usamos `cld` para adicionar letras compactas indicando grupos significativamente diferentes. `pwpm(m2_medias)` e `pwpp(m2_medias)` mostram as comparações de pares em formato de tabela e gráfico, `pairs(m2_medias)` exibe os pares de médias. Plotamos os resíduos do modelo. Realizamos o teste de Shapiro-Wilk para verificar a normalidade dos resíduos. Realizamos o teste de Bartlett para verificar a homogeneidade das variâncias.Usamos funções do pacote `performance` para verificar a normalidade dos resíduos e a heteroscedasticidade. Usamos o pacote `DHARMa` para simular resíduos do modelo e plotamos esses resíduos para diagnóstico.Usamos a função `boxcox` do pacote `MASS` para encontrar a transformação Box-Cox que estabiliza a variância e normaliza os dados. Calculamos o valor de lambda que maximiza a função de log-verossimilhança. Transformamos a variável count usando o valor de lambda obtido. 
+Realizamos uma análise de variância (ANOVA) no modelo ajustado. Usamos `emmeans` para calcular as médias estimadas dos níveis de spray.Plotamos essas médias estimadas.Usamos `cld` para adicionar letras compactas indicando grupos significativamente diferentes. `pwpm(m2_medias)` e `pwpp(m2_medias)` mostram as comparações de pares em formato de tabela e gráfico, `pairs(m2_medias)` exibe os pares de médias. Plotamos os resíduos do modelo. Realizamos o teste de Shapiro-Wilk para verificar a normalidade dos resíduos. Realizamos o teste de Bartlett para verificar a homogeneidade das variâncias.Usamos funções do pacote `performance` para verificar a normalidade dos resíduos e a heteroscedasticidade. Usamos o pacote `DHARMa` para simular resíduos do modelo e plotamos esses resíduos para diagnóstico.Usamos a função `boxcox` do pacote `MASS` para encontrar a transformação Box-Cox que estabiliza a variância e normaliza os dados. Calculamos o valor de lambda que maximiza a função de log-verossimilhança. Transformamos a variável count usando o valor de lambda obtido.
+
 ```{r}
 
 m2 <- lm (count2 ~ spray, data = inseticida)
@@ -304,7 +309,7 @@ m3
 
 # Alternativa 3 - GLMs
 
-Primeiramente foi utilizado o modelo linear misto (GLM), utilizando a família Poisson, Os GLMs são uma classe de modelos estatísticos flexíveis que permitem que a variável de resposta tenha distribuições de erro diferentes da distribuição normal, que é assumida nos modelos de regressão linear clássicos. Posteriormente, realizamos uma análise de variância (Anova), utilizamos o pacote `car` para fornecer uma tabela ANOVA do Tipo II ou Tipo III para o modelo, que pode ser mais informativa em alguns contextos. Usamos o comando `plot(simulateResiduals(m4))` para plotar os resíduos do modelo usando a função `simulateResiduals`, que é útil para verificar a adequação do modelo. Calculamos  as médias marginais estimadas (EMMs) para os níveis do fator spray, na escala da resposta. Usamos a função `cld` para gerar uma exibição compacta de letras para as EMMs, o que ajuda a interpretar as comparações par a par.
+Primeiramente foi utilizado o modelo linear misto (GLM), utilizando a família Poisson, Os GLMs são uma classe de modelos estatísticos flexíveis que permitem que a variável de resposta tenha distribuições de erro diferentes da distribuição normal, que é assumida nos modelos de regressão linear clássicos. Posteriormente, realizamos uma análise de variância (Anova), utilizamos o pacote `car` para fornecer uma tabela ANOVA do Tipo II ou Tipo III para o modelo, que pode ser mais informativa em alguns contextos. Usamos o comando `plot(simulateResiduals(m4))` para plotar os resíduos do modelo usando a função `simulateResiduals`, que é útil para verificar a adequação do modelo. Calculamos as médias marginais estimadas (EMMs) para os níveis do fator spray, na escala da resposta. Usamos a função `cld` para gerar uma exibição compacta de letras para as EMMs, o que ajuda a interpretar as comparações par a par.
 
 ```{r}
 m4 <- glm(count ~ spray,
@@ -323,7 +328,7 @@ cld(m4_medias)
 
 ```
 
-#Anova fatorial
+##Anova fatorial
 
 Importamos a planilha do Google Drive utilizando a função `gsheet2tbl` e criamos um gráfico de pontos para visualização dos dados.
 
@@ -339,9 +344,9 @@ ggplot(aes(factor(dose), severity, color = factor (dose)))+
  
 ```
 
-#Modelo fatorial (two-way anova)
+##Modelo fatorial (two-way anova)
 
-Ajustamos um modelo linear com a variável resposta severity e os preditores treat e dose, incluindo a interação entre eles, e realizamos a ANOVA. Plotamos resíduos simulados para verificar a adequação do modelo.: Calcula as EMMs para dose, condicionadas por treat, utilizando o comando `emmeans(mf, ~ dose | treat)`  e visualizamos as letras para para as EMMs, facilitando interpretação das comparações.
+Ajustamos um modelo linear com a variável resposta severity e os preditores treat e dose, incluindo a interação entre eles, e realizamos a ANOVA. Plotamos resíduos simulados para verificar a adequação do modelo.: Calcula as EMMs para dose, condicionadas por treat, utilizando o comando `emmeans(mf, ~ dose | treat)` e visualizamos as letras para para as EMMs, facilitando interpretação das comparações.
 
 ```{r}
 
