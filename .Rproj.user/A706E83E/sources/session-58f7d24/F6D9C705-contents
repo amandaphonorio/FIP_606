@@ -26,6 +26,9 @@ website:
         text: Aula8
       - href: Aula910.qmd
         text: Aula 9 10
+      - href: Aula11.qmd
+        text: Aula11
+      
 
 format:
   html:

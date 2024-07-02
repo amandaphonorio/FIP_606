@@ -1,0 +1,190 @@
+---
+title: "Aula 11"
+format: html
+editor: visual
+---
+
+# Instalando pacotes
+
+Carregamos o pacote `rnaturalearthhires`, que fornece dados geoespaciais de alta resolução. Inicialmente, a linha `remotes::install_github("ropensci/rnaturalearthhires")` utilizou o pacote `remotes` para instalar o pacote diretamente do repositório GitHub. Em seguida, a linha `install.packages("rnaturalearthhires", repos = "https://ropensci.r-universe.dev", type = "source")` instalou o mesmo pacote a partir do repositório r-universe da ropensci, especificando o tipo de instalação como "source".
+
+```{r}
+#|eval: false
+
+#Para instalar o pacote rnaturalearthhires:
+remotes::install_github("ropensci/rnaturalearthhires")
+
+install.packages("rnaturalearthhires", repos = "https://ropensci.r-universe.dev", type = "source")
+```
+
+`tidyverse`: Um conjunto de pacotes para manipulação e visualização de dados de maneira eficiente e intuitiva. `gsheet`: Facilita a importação de dados de planilhas do Google Drive. `ggthemes`: Adiciona temas estilizados e escalas ao ggplot2 para gráficos mais personalizados.`r4pde`: Contém ferramentas para análises espaciais e temporais avançadas, embora o uso específico não seja detalhado. `ggspatial`: Adiciona elementos espaciais, como escalas e bússolas, aos gráficos ggplot2. `rnaturalearth` e `rnaturalearthhires`: Proporcionam acesso a dados geoespaciais de alta resolução da Natural Earth. `plotly`: Permite a criação de gráficos interativos, tornando a análise de dados mais dinâmica e envolvente.
+
+```{r}
+library(tidyverse)
+library(gsheet)
+library(ggthemes)
+library(r4pde)
+library(ggspatial)
+library(rnaturalearth)
+library(rnaturalearthhires)
+library(plotly)
+```
+
+# Mapa-múndi
+
+Usamos o pacote `rnaturalearth` para obter dados de países e visualizá-los com `ggplot2` e `geom_sf` para gráficos de mapas. O tema `theme_map()` do pacote `ggthemes` é usado para estilizar o mapa.
+
+```{r}
+WORLD <- ne_countries()
+
+ggplot(WORLD)+
+  geom_sf()+
+  theme_map()
+```
+
+# Mapas de países
+
+Criamos de um objeto chamado AS que contém os dados dos países do continente asiático, utilizando a função `ne_countries(continent = "Asia")`. Em seguida, usou-se a função `ggplot` para iniciar a criação de um gráfico, passando AS como o conjunto de dados. A função `geom_sf` foi usada para adicionar uma camada de geometria espacial ao gráfico, que, nesse caso, desenhará os contornos dos países da Ásia. Por fim, `theme_map` é aplicado para estilizar o gráfico com um tema adequado para mapas, removendo elementos desnecessários como eixos e fundos, e destacando as formas geográficas.
+
+```{r}
+AS <- ne_countries(continent = "Asia")
+
+ggplot(AS)+
+  geom_sf()+
+  theme_map()
+```
+
+# Mapa do Brasil
+
+Criamos um objeto chamado BRA que contém os dados dos estados do Brasil, utilizando a função `ne_states(country = "Brazil", returnclass = c("sf"))`, que retorna esses dados na classe espacial sf. Em seguida, a função `ggplot(BRA)` iniciou a criação de um gráfico, passando BRA como o conjunto de dados. A função `geom_sf(fill = "white", color = "black")` foi usada para adicionar uma camada de geometria espacial ao gráfico, desenhando os contornos dos estados do Brasil com preenchimento branco e bordas pretas.
+
+```{r}
+BRA <- ne_states(country = "Brazil",
+                 returnclass = c("sf"))
+
+ggplot(BRA) + 
+  geom_sf(fill = "white",
+          color = "black")
+```
+
+# Mapa de Minas Gerais
+
+Criamos um objeto chamado MG que contém apenas os dados do estado de Minas Gerais, filtrando o objeto BRA para manter apenas as observações onde o nome do estado em inglês (name_en) é igual a "Minas Gerais". Isso foi feito utilizando a função `filter` do pacote `dplyr`, facilitada pelo operador pipe \|\> para uma sintaxe mais clara e fluida.
+
+```{r}
+MG <- BRA |>
+  filter(name_en == "Minas Gerais")
+```
+
+Criamos um gráfico utilizando os dados dos estados do Brasil e destacamos o estado de Minas Gerais. A função `ggplot(BRA)` iniciou a criação do gráfico, passando BRA como o conjunto de dados. A primeira camada, adicionada com geom_sf(color = "black", fill = "white"), desenhando os contornos de todos os estados do Brasil com bordas pretas e preenchimento branco. A segunda camada, adicionada com geom_sf(data = MG, color = "lightgrey", fill = "turquoise"), sobrepõe os contornos do estado de Minas Gerais com bordas cinza claro e preenchimento turquesa. Esse código destacou visualmente Minas Gerais dentro do contexto dos demais estados brasileiros.
+
+```{r}
+ggplot(BRA) +
+geom_sf(color = "black",
+          fill = "white") +
+  geom_sf(data = MG, 
+          color = "lightgrey",
+          fill = "turquoise")
+```
+
+Criamos um gráfico especificamente do estado de Minas Gerais. A função `ggplot(MG)` inicia a criação do gráfico, passando MG como o conjunto de dados, que contém apenas as informações espaciais de Minas Gerais. A camada `geom_sf(fill = "white")` desenhou o contorno de Minas Gerais com preenchimento branco, resultando em um mapa simplificado do estado.
+
+```{r}
+ggplot(MG) +
+  geom_sf(fill = "white")
+```
+
+# Gráficos interativos
+
+criamos um gráfico interativo dos estados do Brasil. Primeiramente, o objeto BR_int foi criado utilizando a função `ggplot(BRA)` para iniciar a criação do gráfico com os dados dos estados brasileiros. A camada `geom_sf(fill = "white", color = "black", linewidth = 0.3)` adicionou os contornos dos estados com preenchimento branco, bordas pretas e uma espessura de linha de 0,3. Em seguida, o tema do gráfico foi estilizado com `theme_map()`, removendo elementos desnecessários e destacando as formas geográficas. Por fim, a função `ggplotly(BR_int)` converteu o gráfico estático em um gráfico interativo usando a biblioteca `plotly`, permitindo a interação do usuário com o mapa.
+
+```{r}
+BR_int <- ggplot(BRA) +
+  geom_sf(fill = "white",
+          color = "black",
+          linewidth = 0.3)+
+  theme_map()
+
+ggplotly(BR_int)
+```
+
+Criamos um mapa interativo centrado em uma localização específica (longitude -42.8825, latitude -20.7546) com um nível de zoom de 13, utilizando a biblioteca `leaflet` para renderizar os tiles padrão.
+
+```{r}
+library(leaflet)
+
+leaflet() |>
+  addTiles() |> 
+  setView(lng = -42.8825, lat = -20.7546, zoom = 13)
+```
+
+Criamos outro mapa com a mesma biblioteca usada anteriormente.
+
+```{r}
+leaflet() |>
+  addProviderTiles(providers$Esri.NatGeoWorldMap) |> 
+  setView(lng = -42.8825, lat = -20.7546, zoom = 10)
+```
+
+## Mapas interativos com pontos
+
+Carregamos o conjunto de dados RustSoybean do pacote `r4pde` e armazenamos na variável sbr. Este conjunto de dados contém informações sobre a ferrugem da soja, incluindo coordenadas de longitude e latitude.
+
+```{r}
+sbr <- r4pde::RustSoybean
+R_int <- ggplot(BRA) +
+  geom_sf(fill = "white",
+          color = "black",
+          linewidth = 0.3)+
+  geom_point(data = sbr,
+             aes(longitude, latitude),
+             color = "darkred")+
+  theme_map()
+
+ggplotly(BR_int)
+
+```
+
+Criamos um mapa interativo utilizando a biblioteca `leaflet`, com círculos representando as localizações dos dados de ferrugem da soja.
+
+```{r}
+leaflet(sbr,
+        options = leafletOptions(minZoom = 4,
+                                 maxZoom = 6)) %>% 
+  addTiles() |>
+ #comando que permite centralizar o mapa em um local:
+ #setView(lng = -42.8825, lat = -20.7546, zoom = 4) %>% 
+  addCircleMarkers(radius = 5,
+                   stroke = FALSE)
+```
+
+## Exemplo de mapa com gráfico
+
+Criamos um mapa temático dos estados do Brasil, adicionando gráficos de setores (pie charts) que representam a presença de diferentes doenças em diversas localizações. Carregamos os pacotes `ggrepel` e `scatterpie` para criar gráficos com labels que não se sobrepõem e gráficos de setores. `geom_scatterpie(aes(x = lon, y = lat, r = 0.6), alpha = 0.8, color = NA, data = data, cols = c("DFC", "MA", "FER", "ANTR", "OIDIO"))`: Adicionou gráficos de setores nas coordenadas especificadas pelos dados. Cada setor representa uma das doenças listadas em cols, com um raio de 0.6 e 80% de transparência.
+
+```{r}
+data <- gsheet2tbl("https://docs.google.com/spreadsheets/d/1pAIFKsdKxk_UQQXdYwIO-O5NOkYNhpclImJcLziYnk4/edit#gid=50258992")
+
+library(ggrepel)
+library(scatterpie)
+
+ggplot(BRA) +
+  geom_sf(fill = "gray70", alpha = 0.5, color = "white") +
+  coord_sf()+
+  geom_scatterpie(aes(x = lon, y = lat, r = 0.6), alpha = 0.8, color = NA, data = data,
+                  cols = c("DFC",
+                           "MA",
+                           "FER",
+                           "ANTR",
+                           "OIDIO"))+
+  geom_text_repel(data = data, aes(lon, lat, label = Local),
+                   size = 2, nudge_x = 0.2, nudge_y = 0.27, color = "gray30", family = "Arial") +
+  ggthemes::scale_fill_calc()+
+  ggthemes::theme_map() +
+  labs(x = "Longitude", 
+       y = "Latitude", 
+       legend = "", 
+       fill = "Doença")+
+  theme(legend.position = "bottom", 
+        text = element_text(family = "Arial", size = 8))
+```
