@@ -175,10 +175,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#importando-dados-da-internet" id="toc-importando-dados-da-internet" class="nav-link active" data-scroll-target="#importando-dados-da-internet">Importando dados da internet</a></li>
+  <li><a href="#importar-dados-por-meio-do-datapasta" id="toc-importar-dados-por-meio-do-datapasta" class="nav-link active" data-scroll-target="#importar-dados-por-meio-do-datapasta">Importar dados por meio do DataPasta</a>
+  <ul class="collapse">
+  <li><a href="#importando-dados-da-internet" id="toc-importando-dados-da-internet" class="nav-link" data-scroll-target="#importando-dados-da-internet">Importando dados da internet</a></li>
   <li><a href="#importando-os-dados" id="toc-importando-os-dados" class="nav-link" data-scroll-target="#importando-os-dados">Importando os dados</a></li>
+  <li><a href="#transformação-de-dados" id="toc-transformação-de-dados" class="nav-link" data-scroll-target="#transformação-de-dados">Transformação de Dados</a></li>
   <li><a href="#tabela-de-contingência" id="toc-tabela-de-contingência" class="nav-link" data-scroll-target="#tabela-de-contingência">Tabela de contingência</a></li>
   <li><a href="#geom_errorbar" id="toc-geom_errorbar" class="nav-link" data-scroll-target="#geom_errorbar">Geom_errorbar</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -202,7 +206,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>##Importar dados por meio do DataPasta</p>
+<section id="importar-dados-por-meio-do-datapasta" class="level1">
+<h1>Importar dados por meio do DataPasta</h1>
 <p>Importamos os dados por meio do pacote <code>datapasta</code></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datapasta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -319,7 +324,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="dv">49</span>, <span class="fl">0.999</span>, <span class="fl">0.999</span>,  <span class="fl">0.74</span></span>
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>##Transformação de Dados</p>
+</section>
+<section id="transformação-de-dados" class="level2">
+<h2 class="anchored" data-anchor-id="transformação-de-dados">Transformação de Dados</h2>
 <p>Convertermos o formato da planilha com a função <code>pivot_longer</code> e criamos um gráfico utilizando as funções <code>geom_point</code> <code>geom_line</code></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>pepper <span class="sc">|&gt;</span></span>
@@ -444,6 +451,7 @@ Attaching package: 'janitor'</code></pre>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

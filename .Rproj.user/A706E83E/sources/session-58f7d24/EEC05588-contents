@@ -1,3 +1,9 @@
+---
+title: "Aula 8"
+format: html
+editor: visual
+---
+
 # Importação de dados
 
 Utilizamos o pacote `gsheet`, para importar uma planilha no Google Drive através da função `gsheet2tbl`.Após a importação, o dataframe severidade é exibido para verificar se os dados foram carregados corretamente.A coluna rep do dataframe severidade é convertida para fator usando o operador \|\> e a função `mutate` do pacote `dplyr`.
