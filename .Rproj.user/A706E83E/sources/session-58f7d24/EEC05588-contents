@@ -16,7 +16,7 @@ severidade <- severidade |>
 Criamos um gráfico visualização com vários painéis, cada um mostrando a severidade média dos dados (mean_sev) plotada ao longo dos dias (day), segmentada por tipo de irrigação (Irrigation).
 
 ```{r}
-library(ggplot2)
+library(tidyverse)
 
 severidade |> 
   group_by(day, Irrigation) |> 
@@ -31,7 +31,25 @@ severidade |>
 
 # Cálculo da Área abaixo da curva de progresso da doença
 
-Carregamos o pacote `epifitter` e `agricolae`. Os dados foram agrupados por Irrigation (tipo de irrigação) e rep (repetição). Para cada grupo, a função AUDPC foi utilizada para calcular o AACPD, utilizando as colunas day e severity. O resultado é armazenado em uma nova coluna chamada aacpd no data frame curve2. Um modelo linear m_curve foi ajustado para prever o aacpd (severidade da doença) com base em Irrigation (tipo de irrigação) e rep (repetição) como variáveis independentes. O modelo foi ajustado utilizando o data frame curve2.A função anova foi aplicada ao modelo m_curve para realizar a ANOVA. A ANOVA testou se as variáveis independentes (Irrigation e rep) têm um efeito estatisticamente significativo na variável dependente (aacpd). A função cv.model do pacote agricolae foi aplicada ao modelo m_curve para calcular o CV. O CV mede a variabilidade do aacpd em relação à sua média.
+Calculamos a área abaixo da curva de progresso da doença, utilizando a função `AUDPC` do pacote  `agricolae` e `dplyr` para diferentes combinações de irrigação e repetição
+
+```{r}
+# Carregar o pacote agricolae
+library(agricolae)
+library(dplyr)
+
+# Supondo que o dataframe 'severidade' exista e tenha as colunas 'day', 'severity', 'Irrigation' e 'rep'
+# Corrigindo a função para 'audpc'
+result <- severidade |>
+  group_by(Irrigation, rep) |>
+  summarise(aacpd = audpc(severity, day))
+
+# Visualizar o resultado
+print(result)
+
+```
+
+Carregamos o pacote `epifitter`. Os dados foram agrupados por Irrigation (tipo de irrigação) e rep (repetição). Para cada grupo, a função AUDPC foi utilizada para calcular o AACPD, utilizando as colunas day e severity. O resultado é armazenado em uma nova coluna chamada aacpd no data frame curve2. Um modelo linear m_curve foi ajustado para prever o aacpd (severidade da doença) com base em Irrigation (tipo de irrigação) e rep (repetição) como variáveis independentes. O modelo foi ajustado utilizando o data frame curve2.A função anova foi aplicada ao modelo m_curve para realizar a ANOVA. A ANOVA testou se as variáveis independentes (Irrigation e rep) têm um efeito estatisticamente significativo na variável dependente (aacpd). A função cv.model do pacote agricolae foi aplicada ao modelo m_curve para calcular o CV. O CV mede a variabilidade do aacpd em relação à sua média.
 
 ```{r}
 library(epifitter)

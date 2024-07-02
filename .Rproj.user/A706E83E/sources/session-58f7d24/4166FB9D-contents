@@ -1,0 +1,313 @@
+---
+title: "Aula 9 e 10"
+format: html
+---
+
+# Parcela subdividida
+
+Carregamos os pacotes `tidyverse` e `gsheet` para importar e os dados de uma planilha do Google Drive. Usamos a função `gsheet2tbl` para ler os dados da planilha, o objeto foi nomeado como `milho`.
+
+```{r}
+library(tidyverse)
+library(gsheet)
+milho <- gsheet2tbl("https://docs.google.com/spreadsheets/d/1bq2N19DcZdtax2fQW9OHSGMR0X2__Z9T/edit#gid=1345524759")
+
+
+```
+
+# Visualização dos dados
+
+Utilizamos o pacote `ggplot2`, que faz parte do `tidyverse`. A função ggplot foi usada para criar uma visualização dos dados, especificando as variáveis method e index para os eixos x e y, respectivamente. A função geom_jitter adicionou pontos de dispersão com um pequeno desvio horizontal (width = 0.1) para evitar sobreposição e com transparência (alpha = 0.2) para melhor visualização. A função `facet_wrap` foi utilizada para criar gráficos separados para cada nível da variável hybrid, permitindo comparar os dados entre diferentes híbridos de milho. Finalmente, a função `stat_summary` adicionou uma linha de resumo estatístico que mostra a média e o intervalo de confiança (calculado pelo método bootstrap). Isso resulta em uma visualização detalhada que facilita a análise comparativa dos dados entre diferentes métodos e híbridos.
+
+```{r}
+milho |> 
+  ggplot(aes(method, index))+
+  geom_jitter(width = 0.1, alpha = 0.2)+
+  facet_wrap(~ hybrid)+
+ stat_summary(fun.data = "mean_cl_boot", size =0.5, color = "green")
+```
+
+# Modelo para subdividida
+
+Carregamos pacote `lme4` e a variável block é convertida em um fator utilizando a função `mutate`. Um modelo misto linear (lmer) foi ajustado para a raiz quadrada do índice, incluindo os efeitos principais e interações entre hybrid e method, além de block como efeito fixo e block aninhado dentro de hybrid como efeito aleatório. A função `Anova` do pacote `car` foi utilizada para realizar uma análise de variância no modelo. As funções `check_normality` e `check_heteroscedasticity` do pacote `performance` foram usadas para verificar a normalidade dos resíduos e a heterocedasticidade do modelo, respectivamente. O pacote `DHARMa` foi utilizado para simular e plotar resíduos, fornecendo diagnósticos visuais da adequação do modelo, incluindo um gráfico Q-Q e um histograma dos resíduos. O pacote `emmeans` foi empregado para calcular as médias marginais dos híbridos dentro de cada método (hybrid \| method) e dos métodos dentro de cada híbrido (method \| hybrid), apresentando os resultados no formato de resposta original. As comparações de médias foram visualizadas com a função `cld` do pacote `multcomp`, que adiciona letras às médias para indicar diferenças estatisticamente significativas.
+
+```{r}
+library(lme4)
+
+milho <- milho |> 
+  mutate(block = as.factor(block))
+
+mix2 <- lmer(sqrt(index) ~ hybrid*method + block + (1|block/hybrid), data =  milho)
+library(car)
+Anova(mix2)
+
+mix2
+library(performance)
+check_normality(mix2)
+check_heteroscedasticity(mix2)
+
+library(DHARMa)
+plot(simulateResiduals(mix2))
+qqnorm(residuals(mix2))
+qqline(residuals(mix2))
+hist(residuals(mix2))
+
+library(emmeans)
+
+medias_milho <- emmeans(mix2,
+                        ~ hybrid | method,
+                        type = "response")
+medias_milho2 <- emmeans(mix2,
+                        ~ method | hybrid, 
+                        type = "response")
+library(multcomp)
+cld(medias_milho2, Letters = LETTERS)
+```
+
+Um segundo modelo misto linear (mix3) foi ajustado para a raiz quadrada do rendimento (yield) com a mesma estrutura de efeitos. A análise de variância e verificações de heterocedasticidade e normalidade também foram aplicadas ao novo modelo. Este conjunto abrangente de análises fornece uma avaliação detalhada das interações entre híbridos e métodos, além de garantir que os pressupostos do modelo sejam atendidos.
+
+```{r}
+
+
+mix3 <- lmer(sqrt(yield) ~ hybrid*method + block + (1|block/hybrid), data =  milho)
+
+Anova(mix3)
+check_heteroscedasticity(mix3)
+check_normality(mix3)
+
+
+
+
+```
+
+# Regressão linear
+
+Importamos uma planilha do Google Drive contendo informações sobre o estande de plantas (estande). O pacote `gsheet` foi utilizada para importar os dados, e o pacote `ggplot2` do tidyverse é utilizado para criar visualizações. Primeiramente, fizemos um gráfico de dispersão com os dados de trat (tratamentos) e nplants (número de plantas), onde `geom_jitter` adicionou pontos com um pequeno desvio horizontal para evitar sobreposição. A função `facet_wrap` criou gráficos separados para cada experimento (exp), `stat_summary` adicionou uma linha de resumo estatístico mostrando a média e o intervalo de confiança, enquanto `geom_smooth` adicionou uma linha de ajuste linear sem intervalo de confiança. Em seguida, os dados foram filtrados para selecionar apenas o experimento 2 (exp2). Um novo gráfico de dispersão foi criado para esses dados, com pontos individuais `geom_point`, e duas linhas de ajuste: uma quadrática `geom_smooth` com formula = y \~ poly(x,2)) e uma linear simples `geom_smooth`. Para modelagem estatística, um modelo linear de primeira ordem (lm2) e um modelo quadrático de segunda ordem (lm3) foram ajustados aos dados do experimento 2. As somas de quadrados e os coeficientes de cada modelo são resumidos com `summary`. O critério de informação de Akaike (AIC) foi calculado para comparar a qualidade dos modelos.
+
+```{r}
+estande <- gsheet2tbl("https://docs.google.com/spreadsheets/d/1bq2N19DcZdtax2fQW9OHSGMR0X2__Z9T/edit#gid=401662555")
+
+estande |> 
+  ggplot(aes(trat, nplants))+
+  geom_jitter(width = 0.1, alpha = 0.5)+
+  facet_wrap(~ exp)+
+  stat_summary(fun.data = "mean_cl_boot", size =0.5, color = "turquoise")+
+ geom_smooth(method = "lm", se = F)
+
+exp2 <- estande |> 
+  filter(exp == 2)
+
+exp2 |> 
+  ggplot(aes(trat, nplants))+
+  geom_point()+
+  ylim(0,100)+
+  geom_smooth(method= "lm", 
+              se=FALSE, 
+              formula = y ~poly(x,2), color="black")+
+  geom_smooth(method = "lm",
+              se = FALSE)
+
+# modelo linear
+
+exp2$trat2 <- exp2$trat^2 
+  
+# primeira ordem
+lm2 <- lm(nplants ~ trat, 
+          data = exp2)
+# segunda ordem ou quadrático
+lm3 <- lm(nplants ~ trat + trat2 , 
+          data = exp2)
+
+summary(lm2)
+summary(lm3)
+AIC(lm2)
+AIC(lm3)
+
+```
+
+Utilizamos o conjunto de dados WhiteMoldSoybean (wm) da biblioteca `r4pde`, que parece conter informações sobre a relação entre a incidência de mofo branco (inc) e a produtividade de soja (yld). A seguir criamos visualizações e ajusta um modelo linear simples para investigar essa relação. Os dados foram visualizados com `ggplot2`, criamos um gráfico de dispersão, usando a função `geom_point()`, onde inc (incidência) é mapeado no eixo x e yld (produtividade) no eixo y. A variável study foi utilizada para agrupar os dados, diferenciando-os por estudo. Para a linha de ajuste usamos `geom_smooth(method = "lm", se = F)`que ajuda a visualizar a tendência linear entre inc e yld. A função `theme_minimal` aplica um tema minimalista ao gráfico para uma apresentação mais limpa. Em seguida, um modelo linear (mofo1) foi ajustado para os dados com lm(yld \~ inc, data = wm), onde a produtividade (yld) foi modelada como uma função linear da incidência (inc). O resumo do modelo (summary(mofo1)) foi gerado para avaliar a significância estatística da relação, os coeficientes do modelo, e outras estatísticas relevantes, como o valor de R² e o p-valor. Esse processo fornece uma visão clara da relação entre a incidência de mofo branco e a produtividade de soja, tanto visualmente quanto estatisticamente, permitindo uma melhor compreensão do impacto dessa doença na produção agrícola.
+
+```{r}
+library(lme4)
+glm3 <- glmer(nplants ~ trat + (trat | exp), family = "gaussian",
+            data = estande)
+summary(glm3)
+AIC(glm3)
+
+glmb3 <- glmer(nplants ~ trat + (trat | exp), family = poisson(link = "log"), 
+             data = estande)
+summary(glmb3)
+AIC(glmb3)
+
+remotes::install_github("emdelponte/r4pde")
+
+library(r4pde)
+wm <- WhiteMoldSoybean
+
+wm |> 
+  ggplot(aes(inc, yld, group = factor(study)))+
+  geom_point()+
+  #facet_wrap(~study)+
+  theme_minimal()+
+  geom_smooth(method = "lm", se = F)
+
+mofo1 <- lm(yld ~ inc, data = wm)
+summary(mofo1)
+```
+
+Carregamos os pacotes `broom`, `ggplot2`, `patchwork`, e `r4pde` para ajustar modelos lineares, extrair coeficientes, e visualizá-los. Para cada estudo (study), um modelo linear foi ajustado (lm(.$yld ~ .$inc)) e os coeficientes do modelo, incluindo intervalos de confiança, são extraídos usando a função `tidy` do pacote `broom`. Crio-se um histograma das inclinações (estimate) dos coeficientes para inc filtrados do resultado do ajuste do modelo linear (term == ".\$inc"). O tema `theme_r4pde` é aplicado para estilizar o gráfico. De forma semelhante, criou-se um histograma dos interceptos dos modelos ajustados. A média das inclinações dos coeficientes para inc foi calculada. Um segundo histograma das inclinações foi criado (parecido com o primeiro), e os gráficos de interceptos e inclinações são combinados lado a lado utilizando o pacote `patchwork`.
+
+```{r}
+library(broom)
+library(broom)
+library(dplyr)
+library(ggplot2)
+library(patchwork)
+
+# Supondo que 'wm' seja um dataframe existente no ambiente
+# Criação do objeto 'mofo2'
+mofo2 <- wm |> 
+  group_by(study) |> 
+  do(tidy(lm(yld ~ inc, data = .), conf.int = TRUE))
+
+# Criação do objeto 'fit_all' a partir de 'mofo2'
+fit_all <- mofo2
+
+# Filtrando e criando o gráfico 'fit_all'
+p1 <- fit_all |> 
+  filter(term == "inc") |> 
+  ggplot(aes(x = estimate)) +
+  geom_histogram(bins = 8, color = "white", fill = "gray50") +
+  theme_minimal() +
+  labs(x = "slopes", y = "Frequency")
+
+# Criando o gráfico 'p3'
+p3 <- fit_all |> 
+  filter(term == "(Intercept)") |> 
+  ggplot(aes(x = estimate)) +
+  geom_histogram(bins = 8, color = "white", fill = "gray50") +
+  theme_minimal() +
+  labs(x = "Intercept", y = "Frequency")
+
+# Calculando a média dos coeficientes de inclinação
+df <- mofo2 |> filter(term == "inc")
+mean_slope <- mean(df$estimate)
+print(mean_slope)
+
+# Criando o gráfico 'p4'
+p4 <- fit_all |> 
+  filter(term == "inc") |> 
+  ggplot(aes(x = estimate)) +
+  geom_histogram(bins = 8, color = "white", fill = "gray50") +
+  theme_minimal() +
+  labs(x = "Slope", y = "Frequency")
+
+# Combinando os gráficos 'p3' e 'p4' usando patchwork
+combined_plot <- p3 | p4
+print(combined_plot)
+
+```
+
+utilizamos o pacote `lme4`, para ajustar um modelo linear misto. Obtivemos um resumo, uma ANOVA e intervalos de confiança.
+
+```{r}
+
+library(lme4)
+mofo3 <- lmer(yld ~ inc + (inc |study), data = wm, 
+            REML = F)
+summary(mofo3)
+Anova(mofo3)
+confint(mofo3, method = "Wald")
+
+```
+
+Carregamos os pacotes `tidyverse`, `gsheet`, `AgroR`, `corrplo`t e dplyr. Em seguida, os dados foram importados de uma planilha do Google Drive usando a função `gsheet2tbl`. Os dados foram transformados com `pivot_longer` para reorganizar colunas em valores de method e value, que foram plotados em um boxplot. Um scatter plot com linha de tendência foi gerado para as variáveis Assess e ImageJ. As colunas 3 a 5 do dataframe imgs foram selecionadas com `dplyr::select` e usadas para calcular a correlação com `corgraph`. Testes de correlação entre Assess e LeafDoctor foram realizados com cor.test e cor. Outro conjunto de dados foi carregado de uma segunda planilha do Google Drive e colunas específicas foram selecionadas. A correlação foi novamente calculada usando `corgraph`. Por fim, um scatter plot foi gerado para as variáveis DFC e PROD do segundo conjunto de dados.
+
+```{r}
+library(tidyverse)
+library(gsheet)
+library(AgroR)
+library(corrplot)
+library(dplyr)
+
+# Carregar dados
+imgs <- gsheet2tbl("https://docs.google.com/spreadsheets/d/1bq2N19DcZdtax2fQW9OHSGMR0X2__Z9T/edit#gid=373270992")
+
+# Transformar dados e plotar boxplot
+imgs |>
+  pivot_longer(cols = 3:5, names_to = "method", values_to = "value") %>% 
+  ggplot(aes(x = method, y = value)) +
+  geom_boxplot()
+
+# Plotar scatter plot com linha de tendência
+imgs |>
+  ggplot(aes(x = Assess, y = ImageJ)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+
+# Selecionar colunas e calcular correlação
+imgs2 <- imgs |>
+dplyr::select(3:5)
+corgraph(imgs2)
+
+
+# Teste de correlação
+cor.test(imgs$Assess, imgs$LeafDoctor)
+cor(imgs$Assess, imgs$LeafDoctor)
+
+
+# Carregar e manipular segundo conjunto de dados
+campo <- gsheet2tbl("https://docs.google.com/spreadsheets/d/1bq2N19DcZdtax2fQW9OHSGMR0X2__Z9T/edit#gid=866852711")
+
+campo2 <- campo |>
+dplyr::select(DFC, FER, PROD)
+corgraph(campo2)
+
+# Plotar scatter plot com dados de campo
+campo |>
+  ggplot(aes(x = DFC, y = PROD)) +
+  geom_point()
+
+```
+
+As variáveis Assess, ImageJ, e LeafDoctor foram altamente correlacionadas entre si, com correlações acima de 0.97. Isso sugere que todas essas variáveis medem de maneira muito semelhante, indicando consistência entre os métodos de avaliação ou detecção usados nessas medidas. As variáveis DFC e FER tiveram uma forte correlação positiva entre si (0.93), o que sugere que conforme uma aumenta, a outra também tende a aumentar. Ambas DFC e FER têm correlações negativas significativas com PROD (-0.69 e -0.63, respectivamente), indicando que à medida que DFC e FER aumentam, PROD tende a diminuir.
+
+Foi importado dados de uma planilha do Google Drive. Em seguida, o dataframe foi agrupado por code, state e dose, e a média de germination foi calculada para cada grupo, resultando no dataframe pyra2. Este dataframe foi utilizado para criar um gráfico de dispersão das médias de germinação em função das doses, com facetas para cada code. O pacote `drc` foi carregado, e os dados filtrados para code igual a "186" são armazenados em isolado165. Um modelo de regressão de dose-resposta foi ajustado a esses dados (drc1), e várias análises do modelo foram realizadas, incluindo AIC, gráfico do modelo, cálculo da dose eficaz 50 (ED50) com intervalo de confiança, e um resumo do modelo. O pacote `ec50estimator` foi utilizado para estimar a EC50 para todos os dados em pyra2, agrupados por code. Os resultados foram armazenados em df_ec50 e um gráfico de pontos com barras de erro foi gerado para visualizar as estimativas de EC50, com os isolados ordenados por estimativa.
+
+```{r}
+pyra <- gsheet2tbl("https://docs.google.com/spreadsheets/d/1bq2N19DcZdtax2fQW9OHSGMR0X2__Z9T/edit#gid=465348652")
+
+pyra2 <- pyra |> 
+  group_by(code, state, dose) |> 
+  summarise(mean_germination = mean(germination)) 
+
+pyra2|> 
+  ggplot(aes(dose, mean_germination))+
+  geom_point()+
+  facet_wrap(~code)
+
+library(drc)
+
+isolado165 <- pyra2 |> 
+  filter(code == "186")
+
+drc1 <- drm(mean_germination ~ dose, data = isolado165,
+            fct = W1.3())
+AIC(drc1)
+plot(drc1)
+ED(drc1, 50, interval = "delta")
+summary(drc1)
+
+library(ec50estimator)
+df_ec50 <- estimate_EC50(mean_germination ~ dose,
+                         data = pyra2,
+                         isolate_col = "code",
+                         interval = "delta",
+                         fct = drc::LL.3())
+
+df_ec50 |> 
+  ggplot(aes(reorder(ID, Estimate), Estimate))+
+  geom_point()+
+  geom_errorbar(aes(ymin = Lower, ymax = Upper), width = 0.1)+
+  coord_flip()
+```
